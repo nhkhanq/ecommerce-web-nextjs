@@ -2,10 +2,15 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import '@/assets/styles/globals.css'
 const inter  = Inter({subsets: ['latin']})
+import { APP_NAME, APP_DESCRIPTION, SERVER_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "ProStore",
-  description: "Ecommerce website built with NextJs 15",
+  title: {
+    template: `%s | ProStore`,
+    default: APP_NAME
+  },
+  description: `${APP_DESCRIPTION}`,
+  metadataBase: new URL(SERVER_URL)
 };
 
 export default function RootLayout({
