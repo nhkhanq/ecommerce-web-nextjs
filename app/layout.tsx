@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import '@/assets/styles/globals.css'
 const inter  = Inter({subsets: ['latin']})
 import { APP_NAME, APP_DESCRIPTION, SERVER_URL } from "@/lib/constants";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: {
@@ -19,11 +20,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressContentEditableWarning>
       <body
         className={`${inter.className} antialiased`}
       >
-        {children}
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='light'
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
