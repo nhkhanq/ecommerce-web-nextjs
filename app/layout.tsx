@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import '@/assets/styles/globals.css'
-const inter  = Inter({subsets: ['latin']})
+import "@/assets/styles/globals.css";
+const inter = Inter({ subsets: ["latin"] });
 import { APP_NAME, APP_DESCRIPTION, SERVER_URL } from "@/lib/constants";
 import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: {
     template: `%s | ProStore`,
-    default: APP_NAME
+    default: APP_NAME,
   },
   description: `${APP_DESCRIPTION}`,
-  metadataBase: new URL(SERVER_URL)
+  metadataBase: new URL(SERVER_URL),
 };
 
 export default function RootLayout({
@@ -21,12 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressContentEditableWarning>
-      <body
-        className={`${inter.className} antialiased`}
-      >
+      <body className={`${inter.className} antialiased`}>
         <ThemeProvider
-          attribute='class'
-          defaultTheme='light'
+          attribute="class"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >

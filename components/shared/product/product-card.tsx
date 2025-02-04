@@ -21,15 +21,15 @@ const ProductCard = ({ product }: { product: Product }) => {
       <CardContent className="p-4 grid gap-4">
         <div className="text-xs">{product.brand}</div>
         <Link href={`/product/${product.slug}`}>
-        <h2 className="text-sm from-medium">{product.name}</h2>
+          <h2 className="text-sm from-medium">{product.name}</h2>
         </Link>
         <div className="flex-between gap-4">
-            <p>{product.rating} Start</p>
-            {product.stock > 0 ? (
-                <ProductPrice value={Number(product.price)} />
-            ): (
-                <p className="text-destructive">Out of stock</p>
-            )}
+          <p>{product.rating} Start</p>
+          {product.stock > 0 ? (
+            <ProductPrice value={Number(product.price)} />
+          ) : (
+            <p className="text-destructive">Out of stock</p>
+          )}
         </div>
       </CardContent>
     </Card>
