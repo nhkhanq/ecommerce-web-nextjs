@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/sheet";
 
 import UserButton from "./user-button";
-
 const Menu = () => {
   return (
     <div className="flex justify-end gap-3">
