@@ -62,9 +62,8 @@ export async function signUpUser(preState: unknown, formData: FormData) {
     return { success: true, message: "User sign up successfully!" };
   } catch (error) {
     if (isRedirectError(error)) {
-        throw error;
-      }
-      return { success: false, message: "User was not sign up" };
+      throw error;
     }
+    return { success: false, message: "User was not sign up" };
   }
 }
