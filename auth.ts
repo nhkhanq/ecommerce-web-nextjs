@@ -1,25 +1,25 @@
-import NextAuth from 'next-auth';
-import { PrismaAdapter } from '@auth/prisma-adapter';
-import { prisma } from '@/db/prisma';
+import NextAuth from "next-auth";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "@/db/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { compareSync } from 'bcrypt-ts-edge';
-import type { NextAuthConfig } from 'next-auth';
+import { compareSync } from "bcrypt-ts-edge";
+import type { NextAuthConfig } from "next-auth";
 
 export const config = {
   pages: {
-    signIn: '/sign-in',
-    error: '/sign-in',
+    signIn: "/sign-in",
+    error: "/sign-in",
   },
   session: {
-    strategy: 'jwt',
+    strategy: "jwt",
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       credentials: {
-        email: { type: 'email' },
-        password: { type: 'password' },
+        email: { type: "email" },
+        password: { type: "password" },
       },
       async authorize(credentials) {
         if (credentials == null) return null;
@@ -60,12 +60,31 @@ export const config = {
       session.user.role = token.role;
       session.user.name = token.name;
 
+      // console.log(token);
+
       // If there is an update, set the user name
-      if (trigger === 'update') {
+      if (trigger === "update") {
         session.user.name = user.name;
       }
 
       return session;
+    },
+    async jwt({ token, user }: any) {
+      //assign user fields to token
+      if (user) {
+        token.role = user.role;
+
+        if (user.name === "NO_NAME") {
+          token.name = user.email!.split("@")[0];
+
+          //update database to reflect the token name
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { name: token.name },
+          });
+        }
+      }
+      return token;
     },
   },
 } satisfies NextAuthConfig;
