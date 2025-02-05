@@ -5,6 +5,7 @@ import { signIn, signOut } from "@/auth";
 import { hashSync } from "bcrypt-ts-edge";
 import { prisma } from "@/db/prisma";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
+import { formatError } from "../utils";
 
 //sign in the user with credentials
 export async function signInWithCredentials(
@@ -61,9 +62,13 @@ export async function signUpUser(preState: unknown, formData: FormData) {
 
     return { success: true, message: "User sign up successfully!" };
   } catch (error) {
+    // console.log(error.name);
+    // console.log(error.code);
+    // console.log(error.errors);
+    // console.log(error.meta?.target);
     if (isRedirectError(error)) {
       throw error;
     }
-    return { success: false, message: "User was not sign up" };
+    return { success: false, message: formatError(error) };
   }
 }
